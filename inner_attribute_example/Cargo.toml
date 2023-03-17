@@ -1,0 +1,10 @@
+[package]
+name = "inner_attribute_example"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+cast_checks = { path = "../cast_checks" }
+
+[workspace]

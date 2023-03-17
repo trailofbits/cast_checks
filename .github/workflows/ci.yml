@@ -1,0 +1,31 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('.github/workflows/ci.yml', 'cast_checks/tests/ci.rs') }}
+
+      - name: Install dependencies
+        run: |
+          rustup install nightly
+          cargo install cargo-license || true
+          cargo install cargo-sort    || true
+
+      - name: Test
+        run: cargo test
