@@ -24,7 +24,7 @@ So when an invalid cast occurs, a message like the following results:
 thread 'checked_truncation' panicked at 'invalid cast: TryFromIntError(())', cast_checks/tests/basic.rs:30:13
 ```
 
-We say "essentially rewrites" because the code that `cast_checks::enable` actually generates is slightly more complicated. It uses Nikolai Vazquez's [trick from `impls`] to determine whether an appropriate [`TryInto`] implementation exists.
+We say "essentially rewrites" because the actual generated code is slightly more complex. It uses [Nikolai Vazquez]'s [`impls`]' [trick] to determine whether an appropriate [`TryInto`] implementation exists.
 
 ## How to use
 
@@ -41,7 +41,11 @@ fn as_u16(x: u64) -> u16 {
 
 ### With a nightly compiler
 
-**TL;DR: We recommend enabling Rust features [`custom_inner_attributes`] and [`proc_macro_hygiene`], and compiling with [`RUSTFLAGS='--cfg procmacro2_semver_exempt'`].**
+**We recommend enabling Rust features [`custom_inner_attributes`] and [`proc_macro_hygiene`], and compiling with the [`procmacro2_semver_exempt`] config flag, e.g.:**
+
+```sh
+RUSTFLAGS='--cfg procmacro2_semver_exempt' cargo build
+```
 
 If you enable the [`custom_inner_attributes`] and [`proc_macro_hygiene`] features, you can use `cast_checks::enable` as an inner [attribute]. Example:
 
@@ -73,7 +77,7 @@ cast_checks rewriting `y as u128` at cast_checks/tests/basic.rs:22:13
 ...
 ```
 
-Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` be passed to rustc.
+Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` to be passed to rustc.
 
 [`-c overflow-checks`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [attribute]: https://doc.rust-lang.org/reference/attributes.html
@@ -81,6 +85,8 @@ Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` be passed 
 [`procmacro2_semver_exempt`]: https://github.com/dtolnay/proc-macro2#unstable-features
 [`proc_macro_hygiene`]: https://github.com/rust-lang/rust/issues/54727
 [`rustflags='--cfg procmacro2_semver_exempt'`]: https://github.com/dtolnay/proc-macro2#unstable-features
-[trick from `impls`]: https://github.com/nvzqz/impls#how-it-works
+[nikolai vazquez]: https://github.com/nvzqz
+[`impls`]: https://github.com/nvzqz/impls
+[trick]: https://github.com/nvzqz/impls#how-it-works
 [`tryinto`]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
 [`try_into`]: https://doc.rust-lang.org/std/convert/trait.TryInto.html#tymethod.try_into
