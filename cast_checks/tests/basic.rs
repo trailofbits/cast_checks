@@ -56,6 +56,13 @@ fn checked_pointer() {
     let _ = a as u32;
 }
 
+#[test]
+#[cast_checks::enable]
+fn checked_float() {
+    let _ = 1f32 as i32;
+    let _ = 1f64 as i32;
+}
+
 #[allow(dead_code)]
 #[cast_checks::enable]
 fn inferred_type(x: f64) -> i32 {
