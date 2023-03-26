@@ -55,3 +55,9 @@ fn checked_pointer() {
     let a = 300 as *const char; // `a` is a pointer to location 300.
     let _ = a as u32;
 }
+
+#[allow(dead_code)]
+#[cast_checks::enable]
+fn inferred_type(x: f64) -> i32 {
+    x as _
+}
