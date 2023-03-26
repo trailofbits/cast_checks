@@ -6,7 +6,7 @@ use syn::{
     parse, parse_macro_input,
     spanned::Spanned,
     visit_mut::{visit_expr_mut, VisitMut},
-    Expr, ExprCast, Item,
+    Expr, ExprCast, Item, Type,
 };
 
 #[cfg(not(procmacro2_semver_exempt))]
@@ -47,6 +47,10 @@ impl VisitMut for Visitor {
         let Expr::Cast(ExprCast { expr: ref operand, ref ty, ..}) = expr else {
             return;
         };
+
+        if matches!(**ty, Type::Infer(_)) {
+            return;
+        }
 
         let span = expr.span();
 
