@@ -15,7 +15,7 @@ WORKSPACE="$(realpath "$SCRIPTS"/..)"
 
 cd "$WORKSPACE"
 
-grep -o '\[[0-9A-Fa-f]*\]([^)]*)' CHANGELOG.md |
+(grep -o '\[[0-9A-Fa-f]*\]([^)]*)' CHANGELOG.md || true) |
 while read -r LINK; do
     TEXT="$(echo "$LINK" | sed 's/^\[\([^]]*\)\](.*)$/\1/')"
     URL="$(echo "$LINK" | sed 's/^\[[^]]*\](\(.*\))$/\1/')"
@@ -30,7 +30,7 @@ while read -r LINK; do
     exit 1
 done
 
-grep -o '\[#[0-9]*\]([^)]*)' CHANGELOG.md |
+(grep -o '\[#[0-9]*\]([^)]*)' CHANGELOG.md || true) |
 while read -r LINK; do
     N="$(echo "$LINK" | sed 's/^\[#\([^]]*\)\](.*)$/\1/')"
     URL="$(echo "$LINK" | sed 's/^\[[^]]*\](\(.*\))$/\1/')"
