@@ -5,9 +5,12 @@ use tempfile::tempdir;
 fn build() {
     run_command("build", |mut command| {
         command.env("CAST_CHECKS_LOG", "1");
-        command.assert().success().stdout(predicates::str::contains(
-            "cast_checks rewriting `x as u16` at src/lib.rs:3:1",
-        ));
+        command.assert().success().stdout(
+            "\
+cast_checks rewriting `x as u16` at src/lib.rs:3:1
+cast_checks not descending into `mod c ;` at src/lib.rs:3:1
+",
+        );
     });
 }
 

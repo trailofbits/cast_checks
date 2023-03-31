@@ -7,3 +7,5 @@ mod b {
         x as u16
     }
 }
+
+mod c;
