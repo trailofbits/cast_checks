@@ -9,9 +9,6 @@ use syn::{
     Error, Expr, ExprCast, File, Item, ItemMod, Type,
 };
 
-#[cfg(not(procmacro2_semver_exempt))]
-static WARN: std::sync::Once = std::sync::Once::new();
-
 /// A procedural macro to check for invalid casts
 ///
 /// # Example
@@ -86,19 +83,7 @@ impl VisitMut for Visitor {
         };
 
         #[cfg(not(procmacro2_semver_exempt))]
-        let msg = {
-            if enabled("CAST_CHECKS_LOG") {
-                WARN.call_once(|| {
-                    println!();
-                    println!(
-                        "WARNING: `CAST_CHECKS_LOG` is enabled, but this option requires \
-                         `--cfg procmacro2_semver_exempt` to be passed to rustc"
-                    );
-                    println!();
-                });
-            }
-            String::from("invalid cast")
-        };
+        let msg = { String::from("invalid cast") };
 
         *expr = parse_quote_spanned! { expr.span() =>
             {
@@ -130,6 +115,7 @@ where
     )
 }
 
+#[cfg(procmacro2_semver_exempt)]
 fn enabled(key: &str) -> bool {
     std::env::var(key).map_or(false, |value| value != "0")
 }
