@@ -69,12 +69,16 @@ thread 'checked_truncation' panicked at 'invalid cast in `x as u8` at cast_check
 
 ## `CAST_CHECKS_LOG`
 
-If you are concerned that some casts are not being checked, try setting `CAST_CHECKS_LOG` when compiling. This will cause `cast_checks` to dump all rewritten locations to standard output. Example:
+If you are concerned that some casts are not being checked, try setting `CAST_CHECKS_LOG` when compiling. This will cause `cast_checks` to dump to standard output:
+
+- all rewritten locations
+- all modules whose contents are not visited because they are not inlined
+
+Example:
 
 ```text
-cast_checks rewriting `x as u8` at cast_checks/tests/basic.rs:13:17
-cast_checks rewriting `y as u128` at cast_checks/tests/basic.rs:22:13
-...
+cast_checks rewriting `x as u16` at src/lib.rs:3:1
+cast_checks not descending into `mod c ;` at src/lib.rs:3:1
 ```
 
 Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` to be passed to rustc.

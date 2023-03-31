@@ -1,12 +1,12 @@
 // #![doc = include_str!("../../README.md")]
 
 use proc_macro::TokenStream;
-use quote::{quote_spanned, ToTokens};
+use quote::ToTokens;
 use syn::{
-    parse, parse_macro_input,
+    parse, parse_quote_spanned,
     spanned::Spanned,
-    visit_mut::{visit_expr_mut, VisitMut},
-    Expr, ExprCast, Item, Type,
+    visit_mut::{visit_expr_mut, visit_item_mod_mut, VisitMut},
+    Error, Expr, ExprCast, File, Item, ItemMod, Type,
 };
 
 #[cfg(not(procmacro2_semver_exempt))]
@@ -27,16 +27,40 @@ static WARN: std::sync::Once = std::sync::Once::new();
 ///
 /// [repository documentation]: https://github.com/trailofbits/cast_checks
 #[proc_macro_attribute]
-pub fn enable(args: TokenStream, item: TokenStream) -> TokenStream {
+pub fn enable(args: TokenStream, tokens: TokenStream) -> TokenStream {
     assert!(args.is_empty());
-    let mut item = parse_macro_input!(item as Item);
-    Visitor.visit_item_mut(&mut item);
-    item.into_token_stream().into()
+    match parse::<Item>(tokens.clone()) {
+        Ok(mut item) => {
+            Visitor.visit_item_mut(&mut item);
+            item.into_token_stream()
+        }
+        Err(error) => {
+            let error = if let Ok(file) = parse::<File>(tokens) {
+                Error::new(
+                    file.span(),
+                    "applying `cast_checks::enable` at the crate root is not currently supported",
+                )
+            } else {
+                Error::new(error.span(), format!("failed to parse item: {error}"))
+            };
+            error.to_compile_error()
+        }
+    }
+    .into()
 }
 
 struct Visitor;
 
 impl VisitMut for Visitor {
+    fn visit_item_mod_mut(&mut self, item_mod: &mut ItemMod) {
+        visit_item_mod_mut(self, item_mod);
+
+        #[cfg(procmacro2_semver_exempt)]
+        if item_mod.content.is_none() && enabled("CAST_CHECKS_LOG") {
+            println!("cast_checks not descending into {}", tokens_at(item_mod));
+        }
+    }
+
     fn visit_expr_mut(&mut self, expr: &mut Expr) {
         visit_expr_mut(self, expr);
 
@@ -52,19 +76,9 @@ impl VisitMut for Visitor {
             return;
         }
 
-        let span = expr.span();
-
         #[cfg(procmacro2_semver_exempt)]
         let msg = {
-            let mut tokens = proc_macro2::TokenStream::new();
-            expr.to_tokens(&mut tokens);
-            let text = format!(
-                "`{}` at {}:{}:{}",
-                tokens,
-                span.source_file().path().display(),
-                span.start().line,
-                span.start().column,
-            );
+            let text = tokens_at(expr);
             if enabled("CAST_CHECKS_LOG") {
                 println!("cast_checks rewriting {text}");
             }
@@ -86,7 +100,7 @@ impl VisitMut for Visitor {
             String::from("invalid cast")
         };
 
-        let tokens = quote_spanned! { span =>
+        *expr = parse_quote_spanned! { expr.span() =>
             {
                 #[allow(unused_imports)]
                 use cast_checks::MaybeTryIntoFallback;
@@ -98,9 +112,22 @@ impl VisitMut for Visitor {
                 }
             }
         };
-
-        *expr = parse(tokens.into()).unwrap();
     }
+}
+
+#[cfg(procmacro2_semver_exempt)]
+fn tokens_at<T>(tokens: &T) -> String
+where
+    T: Spanned + ToTokens,
+{
+    let span = tokens.span();
+    format!(
+        "`{}` at {}:{}:{}",
+        tokens.to_token_stream(),
+        span.source_file().path().display(),
+        span.start().line,
+        span.start().column,
+    )
 }
 
 fn enabled(key: &str) -> bool {
