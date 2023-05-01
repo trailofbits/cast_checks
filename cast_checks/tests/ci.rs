@@ -22,6 +22,7 @@ fn clippy() {
             "--",
             "--deny=warnings",
             "--warn=clippy::pedantic",
+            "--allow=clippy::let-underscore-untyped",
             "--allow=clippy::missing-panics-doc",
         ])
         .assert()
