@@ -30,4 +30,5 @@ find . -name Cargo.toml -exec sed -i "/^cast_checks/{
 s/^\(.*\)\<version = \"[^\"]*\"\(.*\)$/\1$REQ\2/
 }" {} \;
 
-scripts/update_lockfiles.sh
+# smoelius: This repository does not contain lockfiles.
+# scripts/update_lockfiles.sh
