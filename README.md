@@ -77,8 +77,8 @@ If you are concerned that some casts are not being checked, try setting `CAST_CH
 Example:
 
 ```text
-cast_checks rewriting `x as u16` at src/lib.rs:3:1
-cast_checks not descending into `mod c ;` at src/lib.rs:3:1
+cast_checks rewriting `x as u16` at src/lib.rs:0:0
+cast_checks not descending into `mod c ;` at src/lib.rs:0:0
 ```
 
 Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` to be passed to rustc.
