@@ -28,7 +28,7 @@ jobs:
             ~/.cargo/git/db/
           key: ${{ runner.os }}-cargo-${{ hashFiles('.github/workflows/ci.yml', 'cast_checks/tests/ci.rs') }}
 
-      - name: Install dependencies
+      - name: Install tools
         run: |
           rustup install nightly
           cargo install cargo-license || true
