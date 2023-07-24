@@ -68,3 +68,9 @@ fn checked_float() {
 fn inferred_type(x: f64) -> i32 {
     x as _
 }
+
+#[allow(dead_code, clippy::cast_lossless)]
+#[cast_checks::enable]
+fn block_expression(x: u32) -> f64 {
+    x as f64 / 2.0
+}

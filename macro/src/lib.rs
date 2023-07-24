@@ -86,7 +86,7 @@ impl VisitMut for Visitor {
         let msg = { String::from("invalid cast") };
 
         *expr = parse_quote_spanned! { expr.span() =>
-            {
+            ({
                 #[allow(unused_imports)]
                 use cast_checks::MaybeTryIntoFallback;
 
@@ -95,7 +95,7 @@ impl VisitMut for Visitor {
                 } else {
                     #operand as #ty
                 }
-            }
+            })
         };
     }
 }
