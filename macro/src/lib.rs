@@ -90,6 +90,7 @@ impl VisitMut for Visitor {
                 #[allow(unused_imports)]
                 use cast_checks::MaybeTryIntoFallback;
 
+                #[allow(unused_parens, clippy::double_parens)]
                 if let Some(result) = cast_checks::MaybeTryInto::<_, #ty >::new( #operand ).maybe_try_into() {
                     result.expect( #msg )
                 } else {
