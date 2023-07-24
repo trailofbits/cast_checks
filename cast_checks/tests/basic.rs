@@ -74,3 +74,19 @@ fn inferred_type(x: f64) -> i32 {
 fn block_expression(x: u32) -> f64 {
     x as f64 / 2.0
 }
+
+#[allow(
+    arithmetic_overflow,
+    dead_code,
+    clippy::cast_lossless,
+    clippy::neg_multiply
+)]
+#[cast_checks::enable]
+#[deny(unused_parens, clippy::double_parens)]
+fn unused_parens(use_parens: bool) -> i64 {
+    if use_parens {
+        (-1 * i32::MIN) as i64
+    } else {
+        -1 * i32::MIN as i64
+    }
+}
