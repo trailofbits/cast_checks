@@ -37,6 +37,7 @@ fn license() {
         &Command::new("cargo")
             .arg("license")
             .assert()
+            .success()
             .get_output()
             .stdout,
     )
