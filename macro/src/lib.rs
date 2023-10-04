@@ -5,6 +5,7 @@ use quote::ToTokens;
 use syn::{
     parse, parse_quote_spanned,
     spanned::Spanned,
+    visit::{visit_type, Visit},
     visit_mut::{visit_expr_mut, visit_item_mod_mut, VisitMut},
     Error, Expr, ExprCast, File, Item, ItemMod, Type,
 };
@@ -28,7 +29,7 @@ pub fn enable(args: TokenStream, tokens: TokenStream) -> TokenStream {
     assert!(args.is_empty());
     match parse::<Item>(tokens.clone()) {
         Ok(mut item) => {
-            Visitor.visit_item_mut(&mut item);
+            RewriteVisitor.visit_item_mut(&mut item);
             item.into_token_stream()
         }
         Err(error) => {
@@ -46,9 +47,9 @@ pub fn enable(args: TokenStream, tokens: TokenStream) -> TokenStream {
     .into()
 }
 
-struct Visitor;
+struct RewriteVisitor;
 
-impl VisitMut for Visitor {
+impl VisitMut for RewriteVisitor {
     fn visit_item_mod_mut(&mut self, item_mod: &mut ItemMod) {
         visit_item_mod_mut(self, item_mod);
 
@@ -65,11 +66,20 @@ impl VisitMut for Visitor {
             return;
         }
 
-        let Expr::Cast(ExprCast { expr: ref operand, ref ty, ..}) = expr else {
+        let Expr::Cast(ExprCast {
+            expr: ref operand,
+            ref ty,
+            ..
+        }) = expr
+        else {
             return;
         };
 
         if matches!(**ty, Type::Infer(_)) {
+            return;
+        }
+
+        if contains_trait_object(ty) {
             return;
         }
 
@@ -114,6 +124,24 @@ where
         span.start().line,
         span.start().column,
     )
+}
+
+fn contains_trait_object(ty: &Type) -> bool {
+    let mut v = ContainsTraitObjectVisitor(false);
+    v.visit_type(ty);
+    v.0
+}
+
+struct ContainsTraitObjectVisitor(bool);
+
+impl<'ast> Visit<'ast> for ContainsTraitObjectVisitor {
+    fn visit_type(&mut self, ty: &'ast Type) {
+        if matches!(ty, Type::TraitObject(_)) {
+            self.0 = true;
+        } else {
+            visit_type(self, ty);
+        }
+    }
 }
 
 #[cfg(procmacro2_semver_exempt)]

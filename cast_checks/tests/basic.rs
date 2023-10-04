@@ -90,3 +90,10 @@ fn unused_parens(use_parens: bool) -> i64 {
         -1 * i32::MIN as i64
     }
 }
+
+#[allow(dead_code)]
+#[cast_checks::enable]
+fn boxed_trait_object() -> Box<dyn std::error::Error> {
+    let error = String::new();
+    Box::new(std::io::Error::new(std::io::ErrorKind::Other, error)) as Box<dyn std::error::Error>
+}
