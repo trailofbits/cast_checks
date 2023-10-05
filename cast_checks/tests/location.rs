@@ -2,10 +2,10 @@ use assert_cmd::Command;
 use tempfile::tempdir;
 
 const LOCATIONS: &[&str] = &[
-    "cast_checks/tests/basic.rs:22:13",
-    "cast_checks/tests/basic.rs:30:13",
-    "cast_checks/tests/basic.rs:40:13",
-    "cast_checks/tests/basic.rs:49:13",
+    "cast_checks/tests/basic.rs:23:13",
+    "cast_checks/tests/basic.rs:31:13",
+    "cast_checks/tests/basic.rs:41:13",
+    "cast_checks/tests/basic.rs:50:13",
 ];
 
 #[test]
