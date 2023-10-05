@@ -16,7 +16,7 @@ assert_cmd = "2.0"
 ctor = "0.2"
 predicates = "3.0"
 regex = "1.9"
-tempfile = "3.7"
+tempfile = "3.8"
 
 [features]
 default = []
