@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Handle boxed trait objects ([#23](https://github.com/trailofbits/cast_checks/pull/23))
+
 ## 0.1.3
 
 - Ensure generated expressions parse as block expressions ([cd283d9](https://github.com/trailofbits/cast_checks/commit/cd283d9dc62346cb0538e35de9adfd2185e39772))
