@@ -1,4 +1,5 @@
 #![allow(clippy::cast_possible_truncation)]
+#![allow(dead_code)]
 
 #[test]
 fn unchecked() {
@@ -63,24 +64,18 @@ fn checked_float() {
     let _ = 1f64 as i32;
 }
 
-#[allow(dead_code)]
 #[cast_checks::enable]
 fn inferred_type(x: f64) -> i32 {
     x as _
 }
 
-#[allow(dead_code, clippy::cast_lossless)]
+#[allow(clippy::cast_lossless)]
 #[cast_checks::enable]
 fn block_expression(x: u32) -> f64 {
     x as f64 / 2.0
 }
 
-#[allow(
-    arithmetic_overflow,
-    dead_code,
-    clippy::cast_lossless,
-    clippy::neg_multiply
-)]
+#[allow(arithmetic_overflow, clippy::cast_lossless, clippy::neg_multiply)]
 #[cast_checks::enable]
 #[deny(unused_parens, clippy::double_parens)]
 fn unused_parens(use_parens: bool) -> i64 {
@@ -91,7 +86,6 @@ fn unused_parens(use_parens: bool) -> i64 {
     }
 }
 
-#[allow(dead_code)]
 #[cast_checks::enable]
 fn boxed_trait_object() -> Box<dyn std::error::Error> {
     let error = String::new();
