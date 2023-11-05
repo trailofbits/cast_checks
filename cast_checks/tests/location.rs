@@ -32,7 +32,7 @@ fn accuracy() {
         .lines()
         .filter_map(|line| {
             if line.starts_with("thread") {
-                line.split(' ').last()
+                line.split(' ').last().and_then(|s| s.strip_suffix(':'))
             } else {
                 None
             }
