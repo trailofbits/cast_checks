@@ -30,6 +30,14 @@ fn clippy() {
 }
 
 #[test]
+fn format() {
+    Command::new("rustup")
+        .args(["run", "nightly", "cargo", "fmt", "--check"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn license() {
     let re = Regex::new(r"^[^:]*\b(Apache-2.0|BSD-3-Clause|MIT)\b").unwrap();
 

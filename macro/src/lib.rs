@@ -18,7 +18,7 @@ use syn::{
 /// #[cast_checks::enable]
 /// fn as_u16(x: u64) -> u16 {
 ///     x as u16
-///}
+/// }
 /// ```
 ///
 /// For additional details, see the [repository documentation].
