@@ -1,5 +1,11 @@
 use assert_cmd::Command;
+use std::env::remove_var;
 use tempfile::tempdir;
+
+#[ctor::ctor]
+fn initialize() {
+    remove_var("CARGO_TERM_COLOR");
+}
 
 #[test]
 fn build() {
@@ -8,7 +14,7 @@ fn build() {
         command.assert().success().stdout(
             "\
 cast_checks rewriting `x as u16` at src/lib.rs:0:0
-cast_checks not descending into `mod c ;` at src/lib.rs:0:0
+cast_checks not descending into `mod c;` at src/lib.rs:0:0
 ",
         );
     });
