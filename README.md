@@ -41,11 +41,7 @@ fn as_u16(x: u64) -> u16 {
 
 ### With a nightly compiler
 
-**We recommend enabling Rust features [`custom_inner_attributes`] and [`proc_macro_hygiene`], and compiling with the [`procmacro2_semver_exempt`] config flag, e.g.:**
-
-```sh
-RUSTFLAGS='--cfg procmacro2_semver_exempt' cargo build
-```
+**We recommend enabling Rust features [`custom_inner_attributes`] and [`proc_macro_hygiene`].**
 
 If you enable the [`custom_inner_attributes`] and [`proc_macro_hygiene`] features, you can use `cast_checks::enable` as an inner [attribute]. Example:
 
@@ -59,17 +55,9 @@ mod m {
 }
 ```
 
-However, in our experience, this can cause panics to refer to the wrong locations.
-
-To help counter the above, if you compile with the [`procmacro2_semver_exempt`] config flag, `cast_checks` will include more elaborate `expect` messages. Example:
-
-```text
-thread 'checked_truncation' panicked at 'invalid cast in `x as u8` at cast_checks/tests/basic.rs:30:13: TryFromIntError(())', cast_checks/tests/basic.rs:30:13
-```
-
 ## `CAST_CHECKS_LOG`
 
-If you are concerned that some casts are not being checked, try setting `CAST_CHECKS_LOG` when compiling. This will cause `cast_checks` to dump to standard output:
+If you are using a nightly compiler, and you are concerned that some casts are not being checked, try setting `CAST_CHECKS_LOG` when compiling. This will cause `cast_checks` to dump to standard output:
 
 - all rewritten locations
 - all modules whose contents are not visited because they are not inlined
@@ -81,7 +69,11 @@ cast_checks rewriting `x as u16` at src/lib.rs:0:0
 cast_checks not descending into `mod c ;` at src/lib.rs:0:0
 ```
 
-Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` to be passed to rustc.
+**Note:** When this option is enabled, `cast_checks` enables the [`procmacro2_semver_exempt`] config flag, as in:
+
+```sh
+RUSTFLAGS='--cfg procmacro2_semver_exempt' cargo build
+```
 
 [`-c overflow-checks`]: https://doc.rust-lang.org/rustc/codegen-options/index.html#overflow-checks
 [attribute]: https://doc.rust-lang.org/reference/attributes.html
