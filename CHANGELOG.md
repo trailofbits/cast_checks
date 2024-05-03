@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- Simplify README.md ([#37](https://github.com/trailofbits/cast_checks/pull/37))
+
 ## 0.1.4
 
 - Handle boxed trait objects ([#23](https://github.com/trailofbits/cast_checks/pull/23))
