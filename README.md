@@ -1,4 +1,4 @@
-# cast_checks
+# `cast_checks`
 
 A procedural macro to check for invalid casts
 
