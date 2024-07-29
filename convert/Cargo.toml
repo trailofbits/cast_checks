@@ -6,3 +6,6 @@ description = "cast_checks_convert"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/trailofbits/cast_checks"
+
+[lints]
+workspace = true
