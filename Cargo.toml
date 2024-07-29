@@ -1,7 +1,7 @@
 [workspace]
-members = [
-    "cast_checks",
-    "convert",
-    "macro",
-]
+members = ["cast_checks", "convert", "macro"]
 resolver = "2"
+
+[workspace.lints.rust.unexpected_cfgs]
+level = "deny"
+check-cfg = ["cfg(dylint_lib, values(any()))", "cfg(procmacro2_semver_exempt)"]

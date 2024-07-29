@@ -19,3 +19,6 @@ syn = { version = "2.0", features = ["full", "visit", "visit-mut"] }
 [features]
 default = []
 release = []
+
+[lints]
+workspace = true

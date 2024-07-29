@@ -22,3 +22,6 @@ tempfile = "3.8"
 default = []
 release = ["cast_checks_macro/release"]
 __no_should_panic = []
+
+[lints]
+workspace = true
