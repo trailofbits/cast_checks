@@ -100,6 +100,13 @@ impl VisitMut for RewriteVisitor {
                 #[allow(unused_imports)]
                 use cast_checks::MaybeTryIntoFallback;
 
+                // smoelius: It is tempting to want to use `TryFrom` here rather than `TryInto`.
+                // However, there are at least two reasons to prefer `TryInto`:
+                // - Practical: Though developers should not implement `TryInto` directly, they may.
+                //   Thus, using `TryInto` can catch more cases.
+                // - Aesthetic: The value `#operand` is wrapped in a `MaybeTryInto`, which becomes
+                //   the `self` argument to `maybe_try_into`. Thus, `TryInto` better resembles the
+                //   underlying implementation.
                 #[allow(unused_parens, clippy::double_parens)]
                 if let Some(result) = cast_checks::MaybeTryInto::<_, #ty >::new( #operand ).maybe_try_into() {
                     result.expect( #msg )
