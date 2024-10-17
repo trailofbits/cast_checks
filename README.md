@@ -71,8 +71,8 @@ This will cause `cast_checks` to dump to standard output:
 Example:
 
 ```text
-cast_checks rewriting `x as u16` at src/lib.rs:0:0
-cast_checks not descending into `mod c ;` at src/lib.rs:0:0
+cast_checks rewriting `x as u16` at src/lib.rs:3:0
+cast_checks not descending into `mod c ;` at src/lib.rs:3:0
 ```
 
 Note that `CAST_CHECKS_LOG` requires `--cfg procmacro2_semver_exempt` to be passed to rustc.
