@@ -13,8 +13,8 @@ fn build() {
         command.env("CAST_CHECKS_LOG", "1");
         command.assert().success().stdout(
             "\
-cast_checks rewriting `x as u16` at src/lib.rs:0:0
-cast_checks not descending into `mod c;` at src/lib.rs:0:0
+cast_checks rewriting `x as u16` at src/lib.rs:3:0
+cast_checks not descending into `mod c;` at src/lib.rs:3:0
 ",
         );
     });
@@ -26,7 +26,7 @@ fn test() {
         command.assert().failure().stdout(predicates::str::contains(
             "\
 thread 'checked_truncation' panicked at src/lib.rs:3:1:
-invalid cast in `x as u16` at src/lib.rs:0:0: TryFromIntError(())
+invalid cast in `x as u16` at src/lib.rs:3:0: TryFromIntError(())
 ",
         ));
     });
