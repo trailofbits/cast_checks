@@ -1,6 +1,6 @@
 [package]
 name = "cast_checks"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Samuel E. Moelius III <sam@moeli.us>"]
 description = "A procedural macro to check for invalid casts"
 edition = "2021"
@@ -8,8 +8,8 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/trailofbits/cast_checks"
 
 [dependencies]
-cast_checks_convert = { version = "=0.1.5", path = "../convert" }
-cast_checks_macro = { version = "=0.1.5", path = "../macro" }
+cast_checks_convert = { version = "=0.1.6", path = "../convert" }
+cast_checks_macro = { version = "=0.1.6", path = "../macro" }
 
 [dev-dependencies]
 assert_cmd = "2.0"

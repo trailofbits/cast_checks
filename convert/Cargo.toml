@@ -1,6 +1,6 @@
 [package]
 name = "cast_checks_convert"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Samuel E. Moelius III <sam@moeli.us>"]
 description = "cast_checks_convert"
 edition = "2021"

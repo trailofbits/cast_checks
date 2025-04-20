@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+- Address [dtolnay/proc-macro2#497](https://github.com/dtolnay/proc-macro2/pull/497). This fix allows `cast_checks`'s [`CAST_CHECKS_LOG`](https://github.com/trailofbits/cast_checks?tab=readme-ov-file#cast_checks_log) feature to work with recent nightly compilers. ([7c1144d](https://github.com/trailofbits/cast_checks/commit/7c1144d6cd932eff70ef770b7dcd41a00d26bffd))
+
 ## 0.1.5
 
 - Simplify README.md ([#37](https://github.com/trailofbits/cast_checks/pull/37))
