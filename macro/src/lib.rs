@@ -127,7 +127,7 @@ where
     format!(
         "`{}` at {}:{}:{}",
         tokens.to_token_stream(),
-        span.source_file().path().display(),
+        span.file(),
         span.start().line,
         span.start().column,
     )
