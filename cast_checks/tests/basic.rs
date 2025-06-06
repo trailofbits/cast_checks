@@ -89,5 +89,5 @@ fn unused_parens(use_parens: bool) -> i64 {
 #[cast_checks::enable]
 fn boxed_trait_object() -> Box<dyn std::error::Error> {
     let error = String::new();
-    Box::new(std::io::Error::new(std::io::ErrorKind::Other, error)) as Box<dyn std::error::Error>
+    Box::new(std::io::Error::other(error)) as Box<dyn std::error::Error>
 }
