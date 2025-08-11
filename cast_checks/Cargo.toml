@@ -13,7 +13,7 @@ cast_checks_macro = { version = "=0.1.6", path = "../macro" }
 
 [dev-dependencies]
 assert_cmd = "2.0"
-ctor = "0.4"
+ctor = "0.5"
 predicates = "3.0"
 regex = "1.9"
 tempfile = "3.8"
