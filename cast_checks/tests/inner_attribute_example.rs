@@ -23,12 +23,15 @@ cast_checks not descending into `mod c;` at src/lib.rs:3:0
 #[test]
 fn test() {
     run_command("test", |mut command| {
-        command.assert().failure().stdout(predicates::str::contains(
-            "\
-thread 'checked_truncation' panicked at src/lib.rs:3:1:
-invalid cast in `x as u16` at src/lib.rs:3:0: TryFromIntError(())
+        command.assert().failure().stdout(
+            predicates::str::is_match(
+                r"\
+thread 'checked_truncation' \([0-9]*\) panicked at src/lib\.rs:3:1:
+invalid cast in `x as u16` at src/lib\.rs:3:0: TryFromIntError\(\(\)\)
 ",
-        ));
+            )
+            .unwrap(),
+        );
     });
 }
 
