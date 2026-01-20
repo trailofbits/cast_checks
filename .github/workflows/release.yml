@@ -23,9 +23,6 @@ jobs:
       - name: Publish
         run: ./scripts/publish.sh
 
-      - name: Update release branch
-        run: git push origin ${{ github.ref }}:release
-
       - name: Get version
         id: get-version
         run: echo "version=${GITHUB_REF/refs\/tags\/v/}" >> "$GITHUB_OUTPUT"
@@ -41,4 +38,3 @@ jobs:
           body_path: body.md
           draft: false
           prerelease: ${{ contains(github.ref, 'pre') || contains(github.ref, 'rc') }}
-          token: ${{ secrets.REPO_TOKEN }}
