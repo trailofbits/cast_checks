@@ -27,7 +27,7 @@ fn test() {
             predicates::str::is_match(
                 r"\
 thread 'checked_truncation' \([0-9]*\) panicked at src/lib\.rs:3:1:
-invalid cast in `x as u16` at src/lib\.rs:3:0: TryFromIntError\(\(\)\)
+invalid cast in `x as u16` at src/lib\.rs:3:0: TryFromIntError\(PosOverflow\)
 ",
             )
             .unwrap(),
