@@ -1,11 +1,5 @@
 use assert_cmd::Command;
-use std::env::remove_var;
 use tempfile::tempdir;
-
-#[ctor::ctor]
-fn initialize() {
-    remove_var("CARGO_TERM_COLOR");
-}
 
 #[test]
 fn build() {
@@ -46,6 +40,7 @@ fn run_command(subcommand: &str, f: fn(Command)) {
             &tempdir.path().to_string_lossy(),
         ])
         .current_dir("../inner_attribute_example")
+        .env_remove("CARGO_TERM_COLOR")
         .env_remove("RUSTUP_TOOLCHAIN");
 
     f(command);
