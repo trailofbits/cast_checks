@@ -1,5 +1,6 @@
 [workspace]
 members = ["cast_checks", "ci", "convert", "macro"]
+default-members = ["cast_checks", "convert", "macro"]
 resolver = "2"
 
 [workspace.lints.rust.unexpected_cfgs]

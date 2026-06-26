@@ -2,8 +2,17 @@
 name = "ci"
 version = "0.1.0"
 edition = "2024"
+license = "MIT OR Apache-2.0"
+publish = false
 
 [dependencies]
+anyhow = "1.0"
+cargo_metadata = "0.23"
+
+[dev-dependencies]
+assert_cmd = "2.0"
+regex = "1.9"
+tempfile = "3.8"
 
 [lints]
 workspace = true
