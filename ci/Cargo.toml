@@ -10,9 +10,9 @@ anyhow = "1.0"
 cargo_metadata = "0.23"
 
 [dev-dependencies]
-assert_cmd = "2.0"
-regex = "1.9"
-tempfile = "3.8"
+assert_cmd = "2.2"
+regex = "1.13"
+tempfile = "3.27"
 
 [lints]
 workspace = true

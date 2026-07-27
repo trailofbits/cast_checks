@@ -12,10 +12,10 @@ cast_checks_convert = { version = "=0.1.6", path = "../convert" }
 cast_checks_macro = { version = "=0.1.6", path = "../macro" }
 
 [dev-dependencies]
-assert_cmd = "2.0"
-predicates = "3.0"
-regex = "1.9"
-tempfile = "3.8"
+assert_cmd = "2.2"
+predicates = "3.1"
+regex = "1.13"
+tempfile = "3.27"
 
 [features]
 default = []
