@@ -1,27 +1,37 @@
-name: Release
+# smoelius: Based on: https://blog.rust-lang.org/2025/07/11/crates-io-development-update-2025-07/
+
+name: Publish to crates.io
 
 on:
   push:
-    tags:
-      - "v*"
+    tags: ["v*"] # Triggers when pushing tags starting with 'v'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: release # Optional: for enhanced security
+    permissions:
+      contents: write # Required to create GitHub release
+      id-token: write # Required for OIDC token exchange
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          ssh-key: ${{ secrets.SSH_KEY }}
 
       - name: Check CHANGELOG.md
         run: ./scripts/check_changelog.sh "${{ github.ref }}"
 
-      - name: Login
-        run: echo ${{ secrets.CRATES_IO_TOKEN }} | cargo login
+      - uses: rust-lang/crates-io-auth-action@v1
+        id: auth
 
       - name: Publish
-        run: ./scripts/publish.sh
+        # smoelius: Should the next command publish some crates but not all, subsequent
+        # invocations of the same command would fail. Specifically, they would balk at the already
+        # published crates. Thus, manual recovery would be required, e.g.,
+        # `cargo publish -p cast_checks`.
+        run: cargo publish --workspace
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ steps.auth.outputs.token }}
 
       - name: Get version
         id: get-version
