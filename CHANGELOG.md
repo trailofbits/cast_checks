@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.8
+
+- Upgrade `syn` to version 3.0. (The previous release inadvertently reverted the upgrade.) ([#71](https://github.com/trailofbits/cast_checks/pull/71))
+
 ## 0.1.7
 
 - Upgrade `syn` to version 3.0 ([#68](https://github.com/trailofbits/cast_checks/pull/68))
