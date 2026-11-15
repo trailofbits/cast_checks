@@ -17,6 +17,7 @@ assert_cmd = "2.2"
 predicates = "3.1"
 regex = "1.13"
 tempfile = "3.27"
+test_hook = "0.1.0"
 
 [features]
 default = []
