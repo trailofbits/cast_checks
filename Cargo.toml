@@ -6,7 +6,7 @@ resolver = "3"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/trailofbits/cast_checks"
-rust-version = "1.65"
+rust-version = "1.74"
 version = "0.1.8"
 
 [workspace.lints.rust.unexpected_cfgs]
