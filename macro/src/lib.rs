@@ -70,7 +70,7 @@ impl VisitMut for RewriteVisitor {
             expr: ref operand,
             ref ty,
             ..
-        }) = expr
+        }) = &*expr
         else {
             return;
         };
