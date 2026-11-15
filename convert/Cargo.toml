@@ -1,11 +1,12 @@
 [package]
 name = "cast_checks_convert"
-version = "0.1.8"
-authors = ["Samuel E. Moelius III <sam@moeli.us>"]
 description = "cast_checks_convert"
-edition = "2021"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/trailofbits/cast_checks"
+
+edition = { workspace = true }
+license = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
+version = { workspace = true }
 
 [lints]
 workspace = true
