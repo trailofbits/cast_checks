@@ -9,6 +9,10 @@ repository = "https://github.com/trailofbits/cast_checks"
 rust-version = "1.74"
 version = "0.1.8"
 
+[workspace.dependencies]
+cast_checks_convert = { version = "=0.1.8", path = "convert" }
+cast_checks_macro = { version = "=0.1.8", path = "macro" }
+
 [workspace.lints.rust.unexpected_cfgs]
 level = "deny"
 check-cfg = ["cfg(dylint_lib, values(any()))", "cfg(procmacro2_semver_exempt)"]
