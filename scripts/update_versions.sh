@@ -20,15 +20,15 @@ if ! scripts/check_changelog.sh refs/tags/v"$1"; then
     exit 1
 fi
 
-find . -name Cargo.toml -exec sed -i "{
+sed -i "{
 s/^version = \"[^\"]*\"$/$VERSION/
-}" {} \;
+}" Cargo.toml
 
 REQ="${VERSION/\"/\"=}"
 
-find . -name Cargo.toml -exec sed -i "/^cast_checks/{
+sed -i "/^cast_checks/{
 s/^\(.*\)\<version = \"[^\"]*\"\(.*\)$/\1$REQ\2/
-}" {} \;
+}" Cargo.toml
 
 # smoelius: This repository does not contain lockfiles.
 # scripts/update_lockfiles.sh

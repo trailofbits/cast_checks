@@ -9,8 +9,8 @@ rust-version = { workspace = true }
 version = { workspace = true }
 
 [dependencies]
-cast_checks_convert = { version = "=0.1.8", path = "../convert" }
-cast_checks_macro = { version = "=0.1.8", path = "../macro" }
+cast_checks_convert = { workspace = true }
+cast_checks_macro = { workspace = true }
 
 [dev-dependencies]
 assert_cmd = "2.2"
